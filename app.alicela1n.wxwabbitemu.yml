@@ -1,0 +1,39 @@
+app-id: app.alicela1n.wxwabbitemu
+runtime: org.freedesktop.Platform
+runtime-version: '21.08'
+sdk: org.freedesktop.Sdk
+modules:
+  - name: wxWidgets
+    cleanup:
+      - /bin
+      - /include
+      - /share/bakefile
+      - /share/aclocal
+      - /lib/wx/include
+    config-opts:
+      - --with-gtk=3
+      - --disable-sdltest
+      - --enable-unicode
+      - --enable-display
+      - --enable-progrid
+      - --disable-webkit
+      - --disable-webview
+      - --disable-webviewwebkit
+      - --with-expat=builtin
+      - --with-libiconv=/usr
+    build-options:
+      - cxxflags: -std=c++0x
+    sources:
+      - type: archive
+        url: https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.4/wxWidgets-3.0.4.tar.bz2
+        sha256: 96157f988d261b7368e5340afa1a0cad943768f35929c22841f62c25b17bf7f0
+  - name: wxwabbitemu
+    builddir: true
+    buildsystem: meson
+    sources:
+     - type: git
+       url: https://github.com/alberthdev/wxwabbitemu.git
+       commit: 7b9ef9d3109355c053d83ae6be67cd75dd6ca8dc
+       branch: master
+finish-args:
+  - --filesystem=home:rw
